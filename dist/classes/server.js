@@ -7,6 +7,7 @@ const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const helmet_1 = __importDefault(require("helmet"));
 const routes_1 = __importDefault(require("../routes/routes"));
+const database_1 = __importDefault(require("../settings/database"));
 class Server {
     constructor() {
         this.app = express_1.default();
@@ -17,7 +18,9 @@ class Server {
         // ROUTES
         this.routes();
     }
-    dataBaseConnection() { }
+    dataBaseConnection() {
+        database_1.default.connection();
+    }
     middlewares() {
         // CORS
         this.app.use(cors_1.default());

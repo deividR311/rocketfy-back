@@ -3,6 +3,7 @@ import cors from 'cors';
 import helmet from 'helmet';
 
 import appRouter from '../routes/routes';
+import database from '../settings/database';
 
 class Server {
     public app: express.Application;
@@ -18,7 +19,9 @@ class Server {
         this.routes();
     }
 
-    dataBaseConnection() { }
+    dataBaseConnection() {
+        database.connection();
+    }
 
     middlewares() {
         // CORS
