@@ -13,5 +13,5 @@ productRoutes.get('/getAll', productController.getProducts);
 productRoutes.get('/:id', productController.getProductById);
 productRoutes.post('/create', productValidator.product, productController.createProduct);
 productRoutes.put('/:id', productController.updateProduct);
-productRoutes.delete('/:id', productController.deleteProduct);
+productRoutes.delete('/delete', productController.deleteProduct);
 exports.default = productRoutes;

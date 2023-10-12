@@ -59,8 +59,6 @@ class ProductController extends baseController_1.default {
             try {
                 const { body } = req;
                 const product = yield this.productService.createProduct(body);
-                yield this.priceRecordService.createPriceRecord(product);
-                yield this.stockRecordService.createStockRecord(product);
                 res.status(201).json({
                     status: this.success.success,
                     message: this.success.message,
@@ -80,12 +78,6 @@ class ProductController extends baseController_1.default {
             try {
                 const { body, params: { id } } = req;
                 const product = yield this.productService.updateProduct(id, body);
-                if (body.price) {
-                    yield this.priceRecordService.createPriceRecord(product);
-                }
-                if (body.stock) {
-                    yield this.stockRecordService.createStockRecord(product);
-                }
                 res.status(201).json({
                     status: this.success.success,
                     message: this.success.message,
@@ -121,8 +113,6 @@ class ProductController extends baseController_1.default {
             }
         });
         this.productService = new services_1.ProductService();
-        this.priceRecordService = new services_1.PriceRecordService();
-        this.stockRecordService = new services_1.StockRecordService();
     }
 }
 exports.ProductController = ProductController;

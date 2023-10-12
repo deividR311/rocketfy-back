@@ -12,23 +12,23 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ProductController = void 0;
+exports.TagController = void 0;
 const services_1 = require("../services");
 const baseController_1 = __importDefault(require("./baseController"));
-class ProductController extends baseController_1.default {
+class TagController extends baseController_1.default {
     constructor() {
         super();
-        this.getProducts = (req, res) => __awaiter(this, void 0, void 0, function* () {
+        this.getTags = (req, res) => __awaiter(this, void 0, void 0, function* () {
             try {
-                const products = yield this.productService.getProducts();
+                const tags = yield this.tagService.getTags();
                 res.status(200).json({
                     status: this.success.success,
                     message: this.success.message,
-                    products
+                    tags
                 });
             }
             catch (err) {
-                this.logger.error("setTags@ProductController " + JSON.stringify(err) + err);
+                this.logger.error("setTags@TagController " + JSON.stringify(err) + err);
                 res.status(500).json({
                     status: this.errors.error,
                     message: this.errors.internal_server_error,
@@ -36,18 +36,18 @@ class ProductController extends baseController_1.default {
                 });
             }
         });
-        this.getProductById = (req, res) => __awaiter(this, void 0, void 0, function* () {
+        this.getTagById = (req, res) => __awaiter(this, void 0, void 0, function* () {
             try {
                 const { id } = req.params;
-                const product = yield this.productService.getProductById(id);
+                const tag = yield this.tagService.getTagById(id);
                 res.status(200).json({
                     status: this.success.success,
                     message: this.success.message,
-                    product
+                    tag
                 });
             }
             catch (err) {
-                this.logger.error("setTags@ProductController " + JSON.stringify(err) + err);
+                this.logger.error("setTags@TagController " + JSON.stringify(err) + err);
                 res.status(500).json({
                     status: this.errors.error,
                     message: this.errors.internal_server_error,
@@ -55,20 +55,18 @@ class ProductController extends baseController_1.default {
                 });
             }
         });
-        this.createProduct = (req, res) => __awaiter(this, void 0, void 0, function* () {
+        this.createTag = (req, res) => __awaiter(this, void 0, void 0, function* () {
             try {
                 const { body } = req;
-                const product = yield this.productService.createProduct(body);
-                yield this.priceRecordService.createPriceRecord(product);
-                yield this.stockRecordService.createStockRecord(product);
+                const tag = yield this.tagService.createTag(body);
                 res.status(201).json({
                     status: this.success.success,
                     message: this.success.message,
-                    product
+                    tag
                 });
             }
             catch (err) {
-                this.logger.error("setTags@ProductController " + JSON.stringify(err) + err);
+                this.logger.error("setTags@TagController " + JSON.stringify(err) + err);
                 res.status(500).json({
                     status: this.errors.error,
                     message: this.errors.internal_server_error,
@@ -76,24 +74,18 @@ class ProductController extends baseController_1.default {
                 });
             }
         });
-        this.updateProduct = (req, res) => __awaiter(this, void 0, void 0, function* () {
+        this.updateTag = (req, res) => __awaiter(this, void 0, void 0, function* () {
             try {
                 const { body, params: { id } } = req;
-                const product = yield this.productService.updateProduct(id, body);
-                if (body.price) {
-                    yield this.priceRecordService.createPriceRecord(product);
-                }
-                if (body.stock) {
-                    yield this.stockRecordService.createStockRecord(product);
-                }
+                const tag = yield this.tagService.updateTag(id, body);
                 res.status(201).json({
                     status: this.success.success,
                     message: this.success.message,
-                    product
+                    tag
                 });
             }
             catch (err) {
-                this.logger.error("setTags@ProductController " + JSON.stringify(err) + err);
+                this.logger.error("setTags@TagController " + JSON.stringify(err) + err);
                 res.status(500).json({
                     status: this.errors.error,
                     message: this.errors.internal_server_error,
@@ -101,18 +93,18 @@ class ProductController extends baseController_1.default {
                 });
             }
         });
-        this.deleteProduct = (req, res) => __awaiter(this, void 0, void 0, function* () {
+        this.deleteTag = (req, res) => __awaiter(this, void 0, void 0, function* () {
             try {
                 const { id } = req.params;
-                const product = yield this.productService.deleteProduct(id);
+                const tag = yield this.tagService.deleteTag(id);
                 res.status(200).json({
                     status: this.success.success,
                     message: this.success.message,
-                    product
+                    tag
                 });
             }
             catch (err) {
-                this.logger.error("setTags@ProductController " + JSON.stringify(err) + err);
+                this.logger.error("setTags@TagController " + JSON.stringify(err) + err);
                 res.status(500).json({
                     status: this.errors.error,
                     message: this.errors.internal_server_error,
@@ -120,10 +112,8 @@ class ProductController extends baseController_1.default {
                 });
             }
         });
-        this.productService = new services_1.ProductService();
-        this.priceRecordService = new services_1.PriceRecordService();
-        this.stockRecordService = new services_1.StockRecordService();
+        this.tagService = new services_1.TagService();
     }
 }
-exports.ProductController = ProductController;
+exports.TagController = TagController;
 ;

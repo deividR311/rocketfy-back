@@ -12,58 +12,58 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ProductService = void 0;
+exports.TagService = void 0;
 const baseService_1 = __importDefault(require("./baseService"));
-class ProductService extends baseService_1.default {
+class TagService extends baseService_1.default {
     constructor() {
         super();
-        this.getProducts = () => __awaiter(this, void 0, void 0, function* () {
+        this.getTags = () => __awaiter(this, void 0, void 0, function* () {
             try {
-                let products = yield this.product.find();
-                return products;
+                let tags = yield this.tag.find();
+                return tags;
             }
             catch (err) {
                 throw err;
             }
         });
-        this.getProductById = (id) => __awaiter(this, void 0, void 0, function* () {
+        this.getTagById = (id) => __awaiter(this, void 0, void 0, function* () {
             try {
-                let product = yield this.product.findById(id).exec();
-                return product;
+                let tag = yield this.tag.findById(id);
+                return tag;
             }
             catch (err) {
                 throw err;
             }
         });
-        this.createProduct = (product) => __awaiter(this, void 0, void 0, function* () {
+        this.createTag = (tag) => __awaiter(this, void 0, void 0, function* () {
             try {
-                let response = new this.product(product);
+                let response = new this.tag(tag);
                 return response.save();
             }
             catch (err) {
                 throw err;
             }
         });
-        this.updateProduct = (id, product) => __awaiter(this, void 0, void 0, function* () {
+        this.updateTag = (id, tag) => __awaiter(this, void 0, void 0, function* () {
             try {
-                let response = yield this.product.findByIdAndUpdate(id, product);
+                let response = yield this.tag.findByIdAndUpdate(id, tag);
                 return response;
             }
             catch (err) {
                 throw err;
             }
         });
-        this.deleteProduct = (id) => __awaiter(this, void 0, void 0, function* () {
+        this.deleteTag = (id) => __awaiter(this, void 0, void 0, function* () {
             try {
-                let response = yield this.product.findByIdAndDelete(id);
+                let response = yield this.tag.findByIdAndDelete(id);
                 return response;
             }
             catch (err) {
                 throw err;
             }
         });
-        this.product = this.models.Product;
+        this.tag = this.models.Tag;
     }
 }
-exports.ProductService = ProductService;
+exports.TagService = TagService;
 ;

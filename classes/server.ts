@@ -1,6 +1,5 @@
 import express from 'express';
 import cors from 'cors';
-import helmet from 'helmet';
 
 import appRouter from '../routes/routes';
 import database from '../settings/database';
@@ -19,8 +18,8 @@ class Server {
         this.routes();
     }
 
-    dataBaseConnection() {
-        database.connection();
+    async dataBaseConnection() {
+        await database.connection();
     }
 
     middlewares() {
@@ -28,8 +27,6 @@ class Server {
         this.app.use(cors());
         // READ AND CONVERT THE BODY
         this.app.use(express.json());
-
-        this.app.use(helmet.hidePoweredBy());
     }
 
     routes() {

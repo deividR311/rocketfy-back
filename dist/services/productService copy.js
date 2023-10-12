@@ -28,7 +28,7 @@ class ProductService extends baseService_1.default {
         });
         this.getProductById = (id) => __awaiter(this, void 0, void 0, function* () {
             try {
-                let product = yield this.product.findById(id).exec();
+                let product = yield this.product.findById(id);
                 return product;
             }
             catch (err) {
