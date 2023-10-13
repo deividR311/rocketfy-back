@@ -12,32 +12,41 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PriceRecordService = void 0;
+exports.ProductTagService = void 0;
 const baseService_1 = __importDefault(require("./baseService"));
-class PriceRecordService extends baseService_1.default {
+class ProductTagService extends baseService_1.default {
     constructor() {
         super();
-        this.getPriceRecordByProductId = (id) => __awaiter(this, void 0, void 0, function* () {
+        this.createProductTag = (productTags, id) => __awaiter(this, void 0, void 0, function* () {
             try {
-                let PriceRecord = yield this.priceRecord.find({ productId: id }).exec();
-                return PriceRecord;
+                let tags = productTags.map(tag => { tag.productId = id; return tag; });
+                let response = yield this.productTag.insertMany(tags);
+                return response;
             }
             catch (err) {
                 throw err;
             }
         });
-        this.createPriceRecord = (product) => __awaiter(this, void 0, void 0, function* () {
+        this.getProductTagByProductId = (id) => __awaiter(this, void 0, void 0, function* () {
             try {
-                const { _id, price } = product;
-                let response = new this.priceRecord({ productId: _id, price });
-                return response.save();
+                let tags = yield this.productTag.find({ productId: id }).populate('tagId').exec();
+                return tags;
             }
             catch (err) {
                 throw err;
             }
         });
-        this.priceRecord = this.models.PriceRecord;
+        this.deleteProductTag = (id) => __awaiter(this, void 0, void 0, function* () {
+            try {
+                let response = yield this.productTag.deleteMany({ productId: id });
+                return response;
+            }
+            catch (err) {
+                throw err;
+            }
+        });
+        this.productTag = this.models.ProductTag;
     }
 }
-exports.PriceRecordService = PriceRecordService;
+exports.ProductTagService = ProductTagService;
 ;

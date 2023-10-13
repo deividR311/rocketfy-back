@@ -1,7 +1,7 @@
-import PriceRecordModel from "./priceRecord";
+import PriceRecordModel from "./priceRecordModel";
 import ProductModel from "./productModel";
-import ProductTagModel from "./productTag";
-import StockRecordModel from "./stockRecord";
+import ProductTagModel from "./productTagModel";
+import StockRecordModel from "./stockRecordModel";
 import TagModel from "./tagModel";
 
 PriceRecordModel.init();

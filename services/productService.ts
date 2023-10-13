@@ -1,14 +1,25 @@
 import { Model } from "mongoose";
 import BaseService from "./baseService";
-import { Product } from "../interfaces";
+import { Product, ProductTag } from "../interfaces";
 
 export class ProductService extends BaseService {
     product: Model<Product>;
+    productTag: Model<ProductTag>;
 
     constructor() {
         super();
 
         this.product = this.models.Product;
+        this.productTag = this.models.ProductTag;
+    }
+
+    createProductTag = async (productTag: ProductTag) => {
+        try {
+            let response = new this.productTag(productTag);
+            return await response.save();
+        } catch (err) {
+            throw err;
+        }
     }
 
     getProducts = async () => {
@@ -22,7 +33,7 @@ export class ProductService extends BaseService {
 
     getProductById = async (id: string) => {
         try {
-            let product = await this.product.findById(id).exec();
+            let product = await this.product.findOne({ _id: id }).exec();
             return product;
         } catch (err) {
             throw err;

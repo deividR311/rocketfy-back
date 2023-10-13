@@ -1,10 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TagService = exports.StockRecordService = exports.ProductService = exports.PriceRecordService = void 0;
+exports.TagService = exports.StockRecordService = exports.ProductTagService = exports.ProductService = exports.PriceRecordService = void 0;
 var priceRecordService_1 = require("./priceRecordService");
 Object.defineProperty(exports, "PriceRecordService", { enumerable: true, get: function () { return priceRecordService_1.PriceRecordService; } });
 var productService_1 = require("./productService");
 Object.defineProperty(exports, "ProductService", { enumerable: true, get: function () { return productService_1.ProductService; } });
+var productTagService_1 = require("./productTagService");
+Object.defineProperty(exports, "ProductTagService", { enumerable: true, get: function () { return productTagService_1.ProductTagService; } });
 var stockRecordService_1 = require("./stockRecordService");
 Object.defineProperty(exports, "StockRecordService", { enumerable: true, get: function () { return stockRecordService_1.StockRecordService; } });
 var tagService_1 = require("./tagService");

@@ -1,6 +1,6 @@
 import { ObjectId } from "mongoose";
 
 export interface ProductTag {
-    productId: ObjectId;
+    productId: ObjectId | string;
     tagId: ObjectId;
 }

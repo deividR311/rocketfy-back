@@ -24,7 +24,9 @@ class ModelValidator {
                 sku: 'string|required',
                 image: 'string|required',
                 price: 'numeric|required',
-                stock: 'numeric|required'
+                stock: 'numeric|required',
+                tags: 'array|required',
+                'tags.*.tagId': 'required'
             }, modelValidatorErrors_1.default);
             let matched = yield validator.check();
             (matched)

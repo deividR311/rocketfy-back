@@ -40,10 +40,11 @@ class ProductController extends baseController_1.default {
             try {
                 const { id } = req.params;
                 const product = yield this.productService.getProductById(id);
+                const tags = yield this.productTagService.getProductTagByProductId(id);
                 res.status(200).json({
                     status: this.success.success,
                     message: this.success.message,
-                    product
+                    product: { product, tags }
                 });
             }
             catch (err) {
@@ -59,12 +60,13 @@ class ProductController extends baseController_1.default {
             try {
                 const { body } = req;
                 const product = yield this.productService.createProduct(body);
+                const tags = yield this.productTagService.createProductTag(body.tags, product._id);
                 yield this.priceRecordService.createPriceRecord(product);
                 yield this.stockRecordService.createStockRecord(product);
                 res.status(201).json({
                     status: this.success.success,
                     message: this.success.message,
-                    product
+                    product: { product, tags }
                 });
             }
             catch (err) {
@@ -80,6 +82,8 @@ class ProductController extends baseController_1.default {
             try {
                 const { body, params: { id } } = req;
                 const product = yield this.productService.updateProduct(id, body);
+                yield this.productTagService.deleteProductTag(id);
+                const tags = yield this.productTagService.createProductTag(body.tags, id);
                 if (body.price) {
                     yield this.priceRecordService.createPriceRecord(product);
                 }
@@ -89,7 +93,7 @@ class ProductController extends baseController_1.default {
                 res.status(201).json({
                     status: this.success.success,
                     message: this.success.message,
-                    product
+                    product: { product, tags }
                 });
             }
             catch (err) {
@@ -105,10 +109,11 @@ class ProductController extends baseController_1.default {
             try {
                 const { id } = req.params;
                 const product = yield this.productService.deleteProduct(id);
+                const tags = yield this.productTagService.deleteProductTag(id);
                 res.status(200).json({
                     status: this.success.success,
                     message: this.success.message,
-                    product
+                    product: { product, tags }
                 });
             }
             catch (err) {
@@ -123,6 +128,7 @@ class ProductController extends baseController_1.default {
         this.productService = new services_1.ProductService();
         this.priceRecordService = new services_1.PriceRecordService();
         this.stockRecordService = new services_1.StockRecordService();
+        this.productTagService = new services_1.ProductTagService();
     }
 }
 exports.ProductController = ProductController;

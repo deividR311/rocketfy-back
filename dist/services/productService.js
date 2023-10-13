@@ -17,6 +17,15 @@ const baseService_1 = __importDefault(require("./baseService"));
 class ProductService extends baseService_1.default {
     constructor() {
         super();
+        this.createProductTag = (productTag) => __awaiter(this, void 0, void 0, function* () {
+            try {
+                let response = new this.productTag(productTag);
+                return yield response.save();
+            }
+            catch (err) {
+                throw err;
+            }
+        });
         this.getProducts = () => __awaiter(this, void 0, void 0, function* () {
             try {
                 let products = yield this.product.find();
@@ -28,7 +37,7 @@ class ProductService extends baseService_1.default {
         });
         this.getProductById = (id) => __awaiter(this, void 0, void 0, function* () {
             try {
-                let product = yield this.product.findById(id).exec();
+                let product = yield this.product.findOne({ _id: id }).exec();
                 return product;
             }
             catch (err) {
@@ -63,6 +72,7 @@ class ProductService extends baseService_1.default {
             }
         });
         this.product = this.models.Product;
+        this.productTag = this.models.ProductTag;
     }
 }
 exports.ProductService = ProductService;
