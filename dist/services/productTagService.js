@@ -17,10 +17,16 @@ const baseService_1 = __importDefault(require("./baseService"));
 class ProductTagService extends baseService_1.default {
     constructor() {
         super();
-        this.createProductTag = (productTags, id) => __awaiter(this, void 0, void 0, function* () {
+        this.createProductTag = (tags, id) => __awaiter(this, void 0, void 0, function* () {
             try {
-                let tags = productTags.map(tag => { tag.productId = id; return tag; });
-                let response = yield this.productTag.insertMany(tags);
+                let productTags = tags.map(tag => {
+                    let response = {
+                        productId: id,
+                        tagId: tag._id
+                    };
+                    return response;
+                });
+                let response = yield this.productTag.insertMany(productTags);
                 return response;
             }
             catch (err) {

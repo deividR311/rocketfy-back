@@ -1,6 +1,6 @@
 import { Model, ObjectId } from "mongoose";
 import BaseService from "./baseService";
-import { ProductTag } from "../interfaces";
+import { ProductTag, Tag } from "../interfaces";
 
 export class ProductTagService extends BaseService {
     productTag: Model<ProductTag>;
@@ -11,10 +11,17 @@ export class ProductTagService extends BaseService {
         this.productTag = this.models.ProductTag;
     }
 
-    createProductTag = async (productTags: ProductTag[], id: ObjectId | string) => {
+    createProductTag = async (tags: Tag[], id: ObjectId | string) => {
         try {
-            let tags = productTags.map(tag => { tag.productId = id; return tag; });
-            let response = await this.productTag.insertMany(tags);
+            let productTags = tags.map(tag => {
+                let response = {
+                    productId: id,
+                    tagId: tag._id
+                };
+                return response;
+            });
+
+            let response = await this.productTag.insertMany(productTags);
             return response;
         } catch (err) {
             throw err;

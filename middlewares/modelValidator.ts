@@ -13,8 +13,7 @@ class ModelValidator {
             image: 'string|required',
             price: 'numeric|required',
             stock: 'numeric|required',
-            tags: 'array|required',
-            'tags.*.tagId': 'required'
+            tags: 'required|array'
         }, modelErrors
         );
 

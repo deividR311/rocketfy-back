@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { ProductService, PriceRecordService, StockRecordService, ProductTagService } from "../services";
 import BaseController from "./baseController";
+import { statusResponse } from "../helpers/statusResponse";
 
 export class ProductController extends BaseController {
     productService: ProductService;
@@ -19,18 +20,10 @@ export class ProductController extends BaseController {
     getProducts = async (req: Request, res: Response) => {
         try {
             const products = await this.productService.getProducts();
-            res.status(200).json({
-                status: this.success.success,
-                message: this.success.message,
-                products
-            })
+            statusResponse(200, this.success.message, res, products, this.success.success);
         } catch (err: any) {
             this.logger.error("setTags@ProductController " + JSON.stringify(err) + err);
-            res.status(500).json({
-                status: this.errors.error,
-                message: this.errors.internal_server_error,
-                response: err
-            });
+            statusResponse(500, this.errors.internal_server_error, res, err, this.errors.error);
         }
     }
 
@@ -39,18 +32,10 @@ export class ProductController extends BaseController {
             const { id } = req.params;
             const product = await this.productService.getProductById(id);
             const tags = await this.productTagService.getProductTagByProductId(id);
-            res.status(200).json({
-                status: this.success.success,
-                message: this.success.message,
-                product: { product, tags }
-            })
+            statusResponse(200, this.success.message, res, { product, tags }, this.success.success);
         } catch (err: any) {
             this.logger.error("setTags@ProductController " + JSON.stringify(err) + err);
-            res.status(500).json({
-                status: this.errors.error,
-                message: this.errors.internal_server_error,
-                response: err
-            });
+            statusResponse(500, this.errors.internal_server_error, res, err, this.errors.error);
         }
     }
 
@@ -63,18 +48,10 @@ export class ProductController extends BaseController {
             await this.priceRecordService.createPriceRecord(product);
             await this.stockRecordService.createStockRecord(product);
 
-            res.status(201).json({
-                status: this.success.success,
-                message: this.success.message,
-                product: { product, tags }
-            })
+            statusResponse(201, this.success.message, res, { product, tags }, this.success.success);
         } catch (err: any) {
             this.logger.error("setTags@ProductController " + JSON.stringify(err) + err);
-            res.status(500).json({
-                status: this.errors.error,
-                message: this.errors.internal_server_error,
-                response: err
-            });
+            statusResponse(500, this.errors.internal_server_error, res, err, this.errors.error);
         }
     }
 
@@ -87,18 +64,10 @@ export class ProductController extends BaseController {
 
             if (body.price) { await this.priceRecordService.createPriceRecord(product!); }
             if (body.stock) { await this.stockRecordService.createStockRecord(product!); }
-            res.status(201).json({
-                status: this.success.success,
-                message: this.success.message,
-                product: { product, tags }
-            })
+            statusResponse(201, this.success.message, res, { product, tags }, this.success.success);
         } catch (err: any) {
             this.logger.error("setTags@ProductController " + JSON.stringify(err) + err);
-            res.status(500).json({
-                status: this.errors.error,
-                message: this.errors.internal_server_error,
-                response: err
-            });
+            statusResponse(500, this.errors.internal_server_error, res, err, this.errors.error);
         }
     }
 
@@ -108,18 +77,10 @@ export class ProductController extends BaseController {
             const product = await this.productService.deleteProduct(id);
             const tags = await this.productTagService.deleteProductTag(id);
 
-            res.status(200).json({
-                status: this.success.success,
-                message: this.success.message,
-                product: { product, tags }
-            })
+            statusResponse(201, this.success.message, res, { product, tags }, this.success.success);
         } catch (err: any) {
             this.logger.error("setTags@ProductController " + JSON.stringify(err) + err);
-            res.status(500).json({
-                status: this.errors.error,
-                message: this.errors.internal_server_error,
-                response: err
-            });
+            statusResponse(500, this.errors.internal_server_error, res, err, this.errors.error);
         }
     }
 };
